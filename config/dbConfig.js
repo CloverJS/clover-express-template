@@ -8,8 +8,8 @@
 // sqlServer配置
 let sqlServerOption = {
   user: 'sa', // 用户名
-  password: '520Pyf147258369', // 密码
-  server: '119.45.102.83', // 服务器ip
+  password: 'xxxxxxx', // 密码
+  server: '255.255.255.00', // 服务器ip
   port: 1433, // 连接端口, 缺省值为1433
   database: 'test', // 数据库名
   options: { // 参数配置
