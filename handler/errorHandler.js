@@ -26,6 +26,10 @@ exports.errorHandler = function(err, req, res, next) {
     if(err.code === "ER_TRUNCATED_WRONG_VALUE_FOR_FIELD"){
       return res.status(403).send(util.buildError('数据类型错误!'))
     }
+    // 传入值的长度超出了数据库允许的范围
+    if(err.code === "ER_DATA_TOO_LONG"){
+      return res.status(403).send(util.buildError('数据超出允许的最大长度!'))
+    }
     // (自定义错误值)上传了不被允许的文件格式,此错误来源于multer
     if(err.message === "FileNotAllow") {
       return res.status(403).send(util.buildError('不被允许的文件格式!'))

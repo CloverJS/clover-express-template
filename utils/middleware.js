@@ -53,6 +53,14 @@ exports.checkUser = async (req, res, next) => {
     let { user_id } = req.user;
     let { authorization } = req.headers;
     try {
+      // 如果用户被封禁, 则直接返回封禁提示
+      let status = await querySql("select user_id, status from user where user_id = ?", [
+        user_id
+      ])
+      if(status.length !== 0 && status[0].status === -1) {
+        return res.json(util.buildError(-1003,'抱歉! 您已被封禁!',[]));
+      }
+      // 查询数据库中存储得用户token
       let result = await querySql(
         "select token from user where user_id = ?",
         [user_id]

@@ -1,9 +1,9 @@
 // mysql配置
 const mysql = require("mysql");
-const dbOption = require("../config/dbConfig");
+const {mysqlDbOption} = require("../config/dbConfig");
 
 //创建连接池
-const pool = mysql.createPool(dbOption);
+const mysqlPool = mysql.createPool(mysqlDbOption);
 
 /**
  * mysql数据操作
@@ -14,7 +14,7 @@ const pool = mysql.createPool(dbOption);
 function querySql(sql, params) {
   return new Promise((resolve, reject) => {
     //获取连接
-    pool.getConnection((err, conn) => {
+    mysqlPool.getConnection((err, conn) => {
       if (err) {
         reject(err);
         return;
@@ -41,7 +41,7 @@ function querySql(sql, params) {
 function transaction(sqls, params) {
   return new Promise((resolve, reject) => {
     //获取连接 失败则promise直接返回失败
-    pool.getConnection((err, conn) => {
+    mysqlPool.getConnection((err, conn) => {
       if (err) {
         reject(err);
         return;
@@ -109,7 +109,7 @@ function transaction(sqls, params) {
 
 module.exports = {
   /** 暴露pool连接池对象,以便在需要的地方重新自定义事务逻辑 */
-  pool,
+  mysqlPool,
   querySql,
   transaction,
 };
