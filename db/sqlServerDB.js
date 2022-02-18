@@ -11,7 +11,7 @@ const sqlServerPool = new mssql.ConnectionPool(sqlServerOption);
  * 封装sqlServer操作
  * @param {String} sql 要执行的sql语句
  *  - eg: 'select * from user_table where id = ?'
- * @param {Array<Array<String,String|Array<String,Any>,Any>>} params 
+ * @param {Array<Array<String,String|Array<String,Any>,Any>>} params 要替换sql语句中的?占位符, 数组形式,内部依次是变量名,变量类型,变量值
  *  eg: params: [
  *          ['user_id', 'Int', value],
  *          ['address', ['Char', 50], value],

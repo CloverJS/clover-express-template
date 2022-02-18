@@ -9,7 +9,17 @@ const { PRIVATE_KEY } = require("./utils/constant");
 process.env.PORT = defaultSettings.PORT;
 process.env.HOST = defaultSettings.HOST;
 process.env.URL = defaultSettings.URL;
-const swaggerOptions = require("./config/swagger");
+const swaggerOptions = require("./config/swagger"); // swagger
+/**
+ * 这是log4js日志方案, 在使用前请先 npm install log4js@6.4.1
+ * 然后取消下述log4js注释, 即可使用
+ * 使用示例:
+ *  - loggerProxy.info('hello!');
+ *  - loggerProxy.error('Oh No! Error!');
+ *  - 在utils/common.js中有一个通用的日志方法(处于注释状态),依据响应状态码是否为200判断是否应输出error日志,
+ * 待日后能力提升后,再将此方法改为日志中间件写法.
+ */
+// const loggerProxy = require("./config/logConfig"); // log4js
 
 
 // 引入中间件
