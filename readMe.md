@@ -35,7 +35,10 @@
  - mysql: 
    - querySql :单条sql语句的封装
    - transaction :sql事务的封装
-   - pool :连接池对象
+   - mysqlPool :连接池对象
+ - sqlServer:
+   - querySqlServer: 单条sql语句的封装
+   - sqlServerPool: 连接池对象
 
 ### controller文件夹存放请求处理代码逻辑,所有的路由都定义在routes文件夹中
 
@@ -90,3 +93,5 @@
    - "multer": 文件上传
    - "mysql": mysql操作
    - "redis": redis操作
+ - 之后预计加入的插件:
+   - lodash: js数据处理方法的增强版

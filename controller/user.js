@@ -1,5 +1,8 @@
 // let redis=require("../db/redisDB")
 const { querySql } = require("../db/mysqlDB");
+// sqlServer操作方法
+const {querySqlServer} = require("../db/sqlServerDB");
+
 const util = require("../utils/common");
 const { PWD_SALT, PRIVATE_KEY, EXPIRESD } = require("../utils/constant");
 const { md5 } = require("../utils/index");
@@ -145,4 +148,54 @@ exports.uploadFiles = async (req, res, next) => {
     fileUrls.push({fileUrl})
   })
   res.json(util.buildSuccess('上传成功',fileUrls))
+}
+
+
+
+// sqlServer使用示例 ---经过封装已经与mysql使用很相似
+exports.getUserForSqlServer = async (req, res, next) => {
+  try {
+    // 注意: 因为user恰好是sql保留字, 所以直接使用user会出错,这时要么改表名,要么就加一个[]成为[user]
+    // 查询
+    // let userInfo = await querySqlServer('SELECT * FROM [user]'); // 无额外参数
+    // let userInfo = await querySqlServer('select * from [user] where user_id = ? and user_name = ?',[
+    //   ['user_id', 'Int', 1],
+    //   ['user_name', ['VarChar', 32], '王志超']
+    // ]); // 带额外参数
+    // 新增
+    // let result = await querySqlServer('insert into [user](user_name,password) values(?,?)', [
+    //   ['user_name', 'VarChar', '巴黎斯'],
+    //   ['password', ['VarChar', 32], '12345']
+    // ])
+    // 更新
+    let result = await querySqlServer('update [user] set user_name = ? where user_id = ?', [
+      ['user_name', 'VarChar', '格拉斯'],
+      ['user_id', 'Int', 1]
+    ])
+    // 删除
+    // let result = await querySqlServer('delete [user] where user_id = ?', [
+    //   ['user_id', 6]
+    // ])
+
+    // 查询
+    // console.log(userInfo);
+    // res.json(util.buildSuccess('查询成功',userInfo.recordset));
+    // 新增
+    // if(result.rowsAffected[0] !== 0) {
+    //   res.json(util.buildSuccess('新增成功'));
+    // } else {
+    //   res.json(util.buildSuccess('新增失败'));
+    // }
+    // 更新
+    if(result.rowsAffected[0] !== 0) {
+      res.json(util.buildSuccess('更新成功'));
+    } else {
+      res.json(util.buildSuccess('更新失败'));
+    }
+    // 删除 -- 同样需要像新增和更新那样, 判断受影响的行(result.rowsAffected[0])是否不为0
+    // res.json(util.buildSuccess('删除成功'));
+  } catch (e) {
+    console.log(e)
+    next(e)
+  }
 }

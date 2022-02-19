@@ -1,5 +1,6 @@
 //   存放通用的方法或验证内容
-const { isUseUrl } = require("../settings");
+const { isUseUrl, WHITE } = require("../settings");
+// const loggerProxy = require("../config/logConfig"); // log4js
 let util = {};
 /**
  * 
@@ -207,5 +208,67 @@ util.nullHandler = function (data, defaultStr = null) {
     }
   }
 };
+
+/**
+ * log4js日志
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+//  util.Logger = (req, res, next) => {
+//   let account_id;
+//   if (!WHITE.includes(req.originalUrl)) {
+//     account_id = req.user.account_id; // 获取用户id
+//   }
+//   try {
+//     if(res.statusCode == 200) {
+//       loggerProxy.info(
+//         `================== ${req.ip}  ${req.method}  ${req.originalUrl} ==================`
+//       );
+//       loggerProxy.info(
+//         `================== 参数START ==================`
+//       );
+//       if (account_id) {
+//         loggerProxy.info(typeof account_id, `account_id: ${account_id}`);
+//       }
+//       if (!util.checkEmpty(req.params)) {
+//         loggerProxy.info(typeof req.params, `params: ${JSON.stringify(req.params)}`);
+//       }
+//       if (!util.checkEmpty(req.body)) {
+//         loggerProxy.info(typeof req.body, `body: ${JSON.stringify(req.body)}`);
+//       }
+//       loggerProxy.info(
+//         `================== 参数END ==================`
+//       );
+//       loggerProxy.info(`${req.method}  ${req.originalUrl}  ${res.statusCode}  ${res._startTime - req._startTime}ms`)
+//     } else {
+//       loggerProxy.error(
+//         `================== ${req.ip}  ${req.method}  ${req.originalUrl} ==================`
+//       );
+//       loggerProxy.error(
+//         `================== 参数START ==================`
+//       );
+//       if (account_id) {
+//         loggerProxy.error(typeof account_id, `account_id: ${account_id}`);
+//       }
+//       if (!util.checkEmpty(req.params)) {
+//         loggerProxy.error(typeof req.params, `params: ${JSON.stringify(req.params)}`);
+//       }
+//       if (!util.checkEmpty(req.body)) {
+//         loggerProxy.error(typeof req.body, `body: ${JSON.stringify(req.body)}`);
+//       }
+//       loggerProxy.error(
+//         `================== 参数END ==================`
+//       );
+//       loggerProxy.error(`${req.method}  ${req.originalUrl}  ${res.statusCode}  ${res._startTime - req._startTime}ms`)
+//     }
+//     // next();
+//   } catch(e) {
+//     loggerProxy.error(typeof e, e);
+//     // next(e);
+//   }
+// };
+
+
 
 module.exports = util;

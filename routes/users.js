@@ -12,6 +12,7 @@ var {
   getUserInfo,
   uploadFile,
   uploadFiles,
+  getUserForSqlServer,
 } = require("../controller/user");
 
 //注册
@@ -70,5 +71,10 @@ router.post("/uploadFiles", upload.array("files", 9), uploadFiles);
 router.post("/uploadImage", upload.single("image"), uploadFile);
 // 多图片上传(最大9个文件) -- 前端上传时需要指定 name = "images"
 router.post("/uploadImages", upload.array("images", 9), uploadFiles);
+
+
+// 从sqlServer中查询用户列表
+router.get("/users", getUserForSqlServer);
+
 
 module.exports = router;
