@@ -66,7 +66,13 @@ exports.userLogin = async (req, res, next) => {
         if(!result || result.length === 0) {
             res.json(util.buildError("账号或密码不正确"));
         }else {
+            let user_id = result[0].user_id;
             let token = jwt.sign({username}, PRIVATE_KEY, {expiresIn: EXPIRESD}) // 这里推荐把userId也写入签名,方便之后查询用户
+            // 将token存入数据库---配合中间件可实现同一用户同一时间只对应一个token
+            await querySql(
+              "update user set token = ? where user_id = ?",
+              [token, user_id]
+            );
             res.json(util.buildSuccess('登录成功',{token:token}))
             // token可以到jwt的官网解析一下,看一下解析内容是不是我们添加的内容
         }

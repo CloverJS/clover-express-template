@@ -19,7 +19,7 @@ exports.checkAPP = (req, res, next) => {
   //     next()
   // }
   // req.body = {haha:'999'}
-  next();
+  next(); // 在启用后应该删除此next()
 };
 
 /**
