@@ -30,6 +30,7 @@ var {error404Handler, errorHandler} = require("./handler/errorHandler");
 
 //引入路由
 var usersRouter = require("./routes/users");
+var filesRouter = require("./routes/files")
 
 //创建实例
 var app = express();
@@ -73,6 +74,7 @@ app.use(
 
 //路由配置并使用中间件,在本项目中所有定义的路由都应当使用checkAPP中间件检查请求来源
 app.use("/api/v1/user", [ checkUser, checkAdmin, nullHandler], usersRouter);
+app.use("/api/v1/file", [ checkUser, checkAdmin, nullHandler], filesRouter);
 
 // catch 404 and forward to error handler
 app.use(error404Handler);

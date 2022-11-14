@@ -1,19 +1,10 @@
-//
 var express = require("express");
 var router = express.Router();
-const { upload } = require("../utils/index");
 // 引入中间件
 var { checkParams } = require("../utils/middleware");
 const { checkSchema } = require('express-validator');
 //引入处理逻辑的JavaScript文件
-var {
-  userRegister,
-  userLogin,
-  getUserInfo,
-  uploadFile,
-  uploadFiles,
-  getUserForSqlServer,
-} = require("../controller/user");
+const UserController = require("../controller/UserController");
 
 //注册
 router.post("/register",[
@@ -42,7 +33,7 @@ router.post("/register",[
         }
     }),
     checkParams
-], userRegister);
+], UserController.register);
 //登录
 router.post("/login",[
     checkSchema({
@@ -60,21 +51,13 @@ router.post("/login",[
         },
     }),
     checkParams
-], userLogin);
+], UserController.login);
 // 获取用户信息
-router.get("/userInfo", getUserInfo);
-// 单文件上传 -- 前端上传时需要指定 name = "file"
-router.post("/uploadFile", upload.single("file"), uploadFile);
-// 多文件上传(最大9个文件) -- 前端上传时需要指定 name = "image"
-router.post("/uploadFiles", upload.array("files", 9), uploadFiles);
-// 单图片上传 -- 前端上传时需要指定 name = "image"
-router.post("/uploadImage", upload.single("image"), uploadFile);
-// 多图片上传(最大9个文件) -- 前端上传时需要指定 name = "images"
-router.post("/uploadImages", upload.array("images", 9), uploadFiles);
+router.get("/userInfo", UserController.getUserInfo);
 
 
 // 从sqlServer中查询用户列表
-router.get("/users", getUserForSqlServer);
+router.get("/users", UserController.getUserForSqlServer);
 
 
 module.exports = router;
