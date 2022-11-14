@@ -96,6 +96,7 @@ exports.checkUser = async (req, res, next) => {
         1,
         [
           "user",
+          "file",
           "person",
           "admin",
         ],
@@ -104,6 +105,7 @@ exports.checkUser = async (req, res, next) => {
         2,
         [
           "user",
+          "file",
         ],
       ],
       [
